@@ -6,7 +6,11 @@ interface User {
 }
 
 const UsersPage = async () => {
-  const response = await fetch("https://jsonplaceholder.typicode.com/users")
+  // Only fetch has access to Next.js cache functionality
+  const response = await fetch("https://jsonplaceholder.typicode.com/users", {
+    next: { revalidate: 10 },
+    // cache: "no-store",
+  })
   const data = await response.json()
   console.log("data", data)
   const users: User[] = data
